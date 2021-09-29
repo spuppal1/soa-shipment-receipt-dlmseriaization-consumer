@@ -1,0 +1,13 @@
+include:
+  - project: 'tmobile/templates'
+    ref: tmo/master
+    file: '/gitlab-ci/pipelines/TETRA/.tmo.tetra.pcf.gitlab-ci.yml'
+
+variables:
+  BUILD_NUMBER: "$CI_PIPELINE_IID"
+  APP_NAME: "${CI_PROJECT_NAME}"
+  MAVEN_PUBLISH_ARGS: "-Dfile=target/${CI_PROJECT_NAME}-${APP_VERSION}.$CI_PIPELINE_IID.jar"
+  MAVEN_BUILD_ARGS: "clean package -U"
+  CDP_SONAR_PRD: "true"
+  JACOCO_COVERAGE_REPORT: "true"
+  ALLOW_SONAR_FAILURE: "true"

@@ -1,0 +1,50 @@
+---
+applications:
+- name: {{ APP_NAME }}
+  buildpack: {{ PCF_BUILDPACK }}
+  path: ./target/{{ CI_PROJECT_NAME }}-{{ APP_VERSION }}.{{ BUILD_NUMBER }}.jar
+  memory: {{ PCF_MEMORY }}
+  stack: {{ PCF_STACK }}
+  instances: {{ PCF_INSTANCES }}
+  domain: {{ DOMAIN }} 
+  random-route: true
+  timeout: 180
+  env:
+    spring.profiles.active: {{ PCF_ENV }}
+    spring.cloud.config.uri: {{ PCF_CONFIG_SERVER_URL }}
+    spring.cloud.config.failFast: true
+    spring.application.name: {{ APP_NAME }}
+    CF_TARGET: {{ PCF_API }}
+    TZ: PST
+    SPRING_PROFILES_ACTIVE: cloud
+    spring.application.name: {{ APP_NAME }}
+  {%- if ENV_NAME == "qlab02" %}
+    JAVA_OPTS: "-Dappdynamics.agent.tierName={{ APP_NAME }}-npe-qlab02 -Dappdynamics.agent.nodeName={{ APP_NAME }}-npe-qlab02:$CF_INSTANCE_INDEX -Xverify:none"
+    logging_level: INFO
+  {%- elif ENV_NAME == "qlab03" %}
+    JAVA_OPTS: "-Dappdynamics.agent.tierName={{ APP_NAME }}-npe-qlab03 -Dappdynamics.agent.nodeName={{ APP_NAME }}-npe-qlab03:$CF_INSTANCE_INDEX -Xverify:none"
+    logging_level: INFO
+  {%- elif ENV_NAME == "plab01" %}
+    JAVA_OPTS: "-Dappdynamics.agent.tierName={{ APP_NAME }}-npe-plab01 -Dappdynamics.agent.nodeName={{ APP_NAME }}-npe-plab01:$CF_INSTANCE_INDEX -Xverify:none"
+    logging_level: ERROR
+  {%- elif ENV_NAME == "production" %} 
+    JAVA_OPTS: "-Dappdynamics.agent.tierName={{ APP_NAME }}-prd-polaris -Dappdynamics.agent.nodeName={{ APP_NAME }}-prd-polaris:$CF_INSTANCE_INDEX -Xverify:none"
+    logging_level: INFO
+  {%- elif ENV_NAME == "prod-titan" %}
+    JAVA_OPTS: "-Dappdynamics.agent.tierName={{ APP_NAME }}-prd-titan -Dappdynamics.agent.nodeName={{ APP_NAME }}-prd-titan:$CF_INSTANCE_INDEX -Xverify:none"
+    logging_level: INFO
+  {%- elif ENV_NAME == "development" %}
+    logging_level: INFO
+  {%- elif ENV_NAME == "mlab02" %}
+    logging_level: INFO
+  {%- elif ENV_NAME == "qlab01" %}
+    logging_level: INFO
+  {%- elif ENV_NAME == "qlab06" %}
+    logging_level: INFO
+  {%- elif ENV_NAME == "qlab07" %}
+    logging_level: INFO
+  {%- endif %}
+  services:
+  {%- set pcfServicesList = PCF_SERVICES.split(',') -%}{%- for pcfService in pcfServicesList %}
+   - {{ pcfService }}
+  {%- endfor %}
