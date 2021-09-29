@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.tmobile.supplychain</groupId>
-	<artifactId>soa-oem-dlmserialization-consumer</artifactId>
+	<artifactId>soa-shipment-receipt-dlmseriaization-consumer</artifactId>
 	<version>${APP_VERSION}.${BUILD_NUMBER}</version>
 
-	<name>soa-oem-dlmserialization-consumer</name>
+	<name>soa-shipment-receipt-dlmseriaization-consumer</name>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

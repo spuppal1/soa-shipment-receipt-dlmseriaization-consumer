@@ -12,10 +12,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = {"com.tmobile.deep", "com.tmobile.supplychain"})
 @EnableJpaRepositories(basePackages = {"com.tmobile.supplychain.shipmentreceiptdlmserializationconsumer.repository"})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-public class OemDlmSerializationConsumerApplication {
+public class ShipmentReceiptDlmSerializationConsumerApplication {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(OemDlmSerializationConsumerApplication.class, args);
+		SpringApplication.run(ShipmentReceiptDlmSerializationConsumerApplication.class, args);
 
 	}
 }
